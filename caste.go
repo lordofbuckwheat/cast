@@ -216,6 +216,12 @@ func ToInt64E(i interface{}) (int64, error) {
 			return v, nil
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int64", i, i)
+	case []byte:
+		v, err := strconv.ParseInt(string(s), 0, 0)
+		if err == nil {
+			return v, nil
+		}
+		return 0, fmt.Errorf("unable to cast %#v of type %T to int64", i, i)
 	case bool:
 		if s {
 			return 1, nil
@@ -404,6 +410,12 @@ func ToIntE(i interface{}) (int, error) {
 			return int(v), nil
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int", i, i)
+	case []byte:
+		v, err := strconv.ParseInt(string(s), 0, 0)
+		if err == nil {
+			return int(v), nil
+		}
+		return 0, fmt.Errorf("unable to cast %#v of type %T to int", i, i)
 	case bool:
 		if s {
 			return 1, nil
@@ -423,6 +435,12 @@ func ToUintE(i interface{}) (uint, error) {
 	switch s := i.(type) {
 	case string:
 		v, err := strconv.ParseUint(s, 0, 0)
+		if err == nil {
+			return uint(v), nil
+		}
+		return 0, fmt.Errorf("unable to cast %#v to uint: %s", i, err)
+	case []byte:
+		v, err := strconv.ParseUint(string(s), 0, 0)
 		if err == nil {
 			return uint(v), nil
 		}
@@ -491,6 +509,12 @@ func ToUint64E(i interface{}) (uint64, error) {
 	switch s := i.(type) {
 	case string:
 		v, err := strconv.ParseUint(s, 0, 64)
+		if err == nil {
+			return v, nil
+		}
+		return 0, fmt.Errorf("unable to cast %#v to uint64: %s", i, err)
+	case []byte:
+		v, err := strconv.ParseUint(string(s), 0, 64)
 		if err == nil {
 			return v, nil
 		}
